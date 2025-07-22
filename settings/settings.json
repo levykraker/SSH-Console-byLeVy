@@ -1,5 +1,5 @@
 {
-    "LogPath": "\\logs\\SSHLog.log",
-    "hosts_list": "\\settings\\hosts.json"
-
+  "LogPath": "\\logs\\SSHLog.log",
+  "hosts_list": "\\settings\\hosts.json",
+  "proxyServer": ""
 }

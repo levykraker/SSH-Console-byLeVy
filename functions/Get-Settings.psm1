@@ -4,6 +4,7 @@ function Get-Settings {
         [string]$MainPath
     )
     begin {
+        $global:JSONPATH = $SettingsPath
         $global:JSONSETTINGS = Get-Content -Path $SettingsPath | ConvertFrom-Json
         $global:MAINROOTPATH = $MainPath
         $global:PREFIXHOSTNAME = $JSONSETTINGS.PrefixHostname
@@ -11,5 +12,6 @@ function Get-Settings {
         $global:PREFIXPASS = $JSONSETTINGS.PrefixPass
         $global:PREFIX = "SSHbL3"
         $global:HOSTSFILE = $MAINROOTPATH + $JSONSETTINGS.hosts_list
+        $global:PROXYSERVER = $JSONSETTINGS.proxyServer
     }
 }

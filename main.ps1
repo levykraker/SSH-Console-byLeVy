@@ -22,6 +22,7 @@ function SSHbL3 {
         Import-Module $PSScriptRoot\functions\navigation\Update-SSHHostMenu.psm1 -Force
         Import-Module $PSScriptRoot\functions\navigation\Get-HostsSchema.psm1 -Force
         Import-Module $PSScriptRoot\functions\navigation\Get-SSHHostMenu.psm1 -Force
+        Import-Module $PSScriptRoot\functions\navigation\Set-ProxyMenu.psm1 -Force
         
         # Import functions modules
         Import-Module $PSScriptRoot\functions\Get-SecureEncryption.psm1 -Force
@@ -35,12 +36,15 @@ function SSHbL3 {
         Import-Module $PSScriptRoot\functions\connection_service\Connect-SSHHost.psm1 -Force 
         Import-Module $PSScriptRoot\functions\connection_service\Update-SSHHost.psm1 -Force 
         Import-Module $PSScriptRoot\functions\connection_service\Remove-SSHHost.psm1 -Force 
+
+
+        Import-Module $PSScriptRoot\functions\proxy_service\Set-Proxy.psm1 -Force 
+        
         
 
         Start-Sleep -Seconds 4
         Clear-Host
 
-        # Get-logs -LogString "=====================Program started====================="
     }   
     process {
         $Choice = Get-Menu
@@ -57,6 +61,7 @@ function SSHbL3 {
             '5' { Set-SSHCredentialsMenu -MainDirectory $PSScriptRoot; SSHbL3 }
             '6' { Remove-SSHCredentialsMenu; SSHbL3 }
             '7' { Update-SSHCredentialsMenu; SSHbl3 }
+            '8' { Set-ProxyMenu; SSHbl3 }
             '0' { Get-logs -LogString "===================== d-.-b Program end ,GOODBYE d-.-b =====================" ; break }
             default { 'Please choose option' }
         }
