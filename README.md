@@ -20,6 +20,10 @@ Use the same server name in host and passwords, then application will automatica
 
 Passwords are encrypted in local file.
 
+# Connection via Proxy
+
+When option with `Server Proxy` is enabled by default all connections will be by this server. It using additional flag `-o ProxyCommand`to connect. You can turn off/turn on this option in main menu.
+
 # Requirement
 
 PowerShell >= 7.5

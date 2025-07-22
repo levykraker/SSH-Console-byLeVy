@@ -9,7 +9,13 @@ function Connect-SSHHost {
         $HostsList = Get-SSHhost
         $Server -= 1
         $ConnectServer = $HostsList[$Server].ServerName
-        $ConnectionArguments = "-o PasswordAuthentication=yes"
+        if ("" -ne $PROXYSERVER) {
+            $ConnectionArguments = "-o ProxyCommand=""ssh -q -W %h:%p $PROXYSERVER"" "
+        }
+        else {
+            $ConnectionArguments = ""
+        }
+  
         
         try {
             $Credential = Get-SSHCredentials | Where-Object { $_.ServerName -eq $ConnectServer }
@@ -31,7 +37,7 @@ function Connect-SSHHost {
 
     process {
         if ($true -eq $PasswordExist) {
-            $StringConnection = "$ConnectUser@$ConnectServer"
+            $StringConnection = "$ConnectionArguments$ConnectUser@$ConnectServer"
             try {
                 Write-Host "Password is in clipboard. Please press right mouse button and enter. If you got added your ssh key on this server you should be connected automatically in a few seconds"
                 $SSHconnection = Start-Process ssh -ArgumentList $StringConnection -NoNewWindow -Wait
@@ -45,8 +51,8 @@ function Connect-SSHHost {
             Get-Logs -LogString "INFO: Missing info about user for this server $ConnectServer. Ask user about username and password "
             Write-host "Missing info about user for this server."
             $ConnectUser = Read-Host "Please provide name of user for this server"
-            # $ConnectPass = Read-Host "Please provide password" -MaskInput
-            $StringConnection = "$ConnectUser@$ConnectServer"
+        
+            $StringConnection = "$ConnectionArguments$ConnectUser@$ConnectServer"
             Start-Process ssh -ArgumentList $StringConnection -NoNewWindow -Wait
         }
 
