@@ -6,14 +6,22 @@ function Connect-SSHHostMenu {
     
     begin {
         Get-Banner
+        $HostsArray = Get-SSHhost
+        if ($null -eq $HostsArray) {
+            return
+        }
         Write-Host "Select server to connect:"
         # #Display description of schema
         Get-HostsSchema
 
-        $HostsArray = Get-SSHhost
+        
     }
     
     process {
+        if ($null -eq $HostsArray) {
+            return
+        }
+
         foreach ($Server in $HostsArray) {
             $LP = $Server.LP
             $ServerName = $Server.ServerName
@@ -36,6 +44,11 @@ function Connect-SSHHostMenu {
     }
     
     end {
+        if ($null -eq $HostsArray) {
+            Write-host "No host on list. Please add hosts first."
+            Start-Sleep -Seconds 2
+            return
+        }
         Connect-SSHHost -Server $Server
     }
 }

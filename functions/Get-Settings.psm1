@@ -13,5 +13,12 @@ function Get-Settings {
         $global:PREFIX = "SSHbL3"
         $global:HOSTSFILE = $MAINROOTPATH + $JSONSETTINGS.hosts_list
         $global:PROXYSERVER = $JSONSETTINGS.proxyServer
+ 
+    }
+    process {
+        if ($false -eq $PROGRAMSESSION) {
+            Get-Logs -LogString "===================== d-.-b Program start ,HELLO d-.-b =====================" 
+            $global:PROGRAMSESSION = $true 
+        }
     }
 }
