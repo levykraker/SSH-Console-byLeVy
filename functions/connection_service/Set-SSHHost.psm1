@@ -7,15 +7,17 @@ function Set-SSHHost {
     begin {
         if (!(Test-Path -Path $HOSTSFILE)) {
             Get-Logs -LogString "WARNING: File $HOSTSFILE not exist. Creating new "
-            New-Item -Path $HOSTSFILE | Out-null
-            Get-Logs -LogString "INFO: Creating hostname schema for $HOSTFILE "
+            New-Item -Path $HOSTSFILE -ItemType File | Out-null
+            Get-Logs -LogString "INFO: Creating hostname schema for $HOSTSFILE "
             $NewSchema = @{ hostnames = @() }
             $NewSchema | ConvertTo-Json -Depth 10 | Set-Content  -Path  $HOSTSFILE
         } 
 
         $HostnameList = Get-Content -Path $HOSTSFILE | ConvertFrom-Json
-
-    
+        if ($null -eq $HostnameList.hostnames) {
+            $HostnameListToClean = $true
+        }
+        $HostnameList.hostnames = @($HostnameList.hostnames)
           
     }
     process {
@@ -26,6 +28,7 @@ function Set-SSHHost {
             FriendlyName = $ServerFriendlyName
             Description  = $Description
         }
+
         $HostnameList.hostnames += $NewServer
         
         
@@ -34,7 +37,10 @@ function Set-SSHHost {
     end {
 
         $HostnameList | ConvertTo-Json -Depth 10 | Set-Content -Path $HOSTSFILE
-        Get-logs -LogString ("Added $SSHhost to hostlist")
+        Get-Logs -LogString ("Added $SSHhost to hostlist")
+        if ($HostnameListToClean) {
+            Remove-SSHHost -Confirm $true -HostToRemove 1 
+        } 
 
     }
 }

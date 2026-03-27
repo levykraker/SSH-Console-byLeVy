@@ -23,7 +23,9 @@ function Update-SSHHostMenu {
         # #Check if any password exists. 
         if (-not $HostsList) { return }
         
-        $HostToUpdate = Read-Host "`n Please choose position form list to update: "
+        $HostToUpdate = Read-Host "`n For go back press 0 `n Please choose position form list to update "
+        if ($HostToUpdate -eq 0) { return }
+
         if (!($HostToUpdate -gt 0 -and $HostToUpdate -le $CountOfHosts)) {
             while (!($HostToUpdate -gt 0 -and $HostToUpdate -le $CountOfHosts)) {
                 $HostToUpdate = Read-Host "Pick out of the range please pick again: "
@@ -74,7 +76,7 @@ function Update-SSHHostMenu {
     
     end {
         # #Check if any password exists. 
-        if (-not $HostsList) { return }
+        if ((-not $HostsList) -or ($HostToUpdate -eq 0)) { return }
         
         Update-SSHhost -HostPossition $HostToUpdate -FieldToUpdate $ValueToUpdate
     }

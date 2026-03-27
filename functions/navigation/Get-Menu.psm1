@@ -14,10 +14,7 @@ function Get-Menu () {
         Write-Host "2) Add new host  "                                                                                              
         Write-Host "3) Remove host"
         Write-Host "4) Edit host"
-        Write-Host "5) Add credentials"
-        Write-Host "6) Remove credentials"
-        Write-Host "7) Edit credentials"
-        Write-Host "8) Enable/disable Server Proxy "
+        Write-Host "5) Enable/disable Server Proxy "
         Write-Host "0) Exit"                                                                                              
 
 
